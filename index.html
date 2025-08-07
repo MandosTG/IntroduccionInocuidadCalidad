@@ -3,55 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inocuidad y Calidad Alimentaria - Primer Día (Mejorado)</title>
+    <title>Inocuidad y Calidad Alimentaria - Primer Día</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
         
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s ease;
         }
+        
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        .chain-link {
+            transition: all 0.3s ease;
+        }
+        
+        .chain-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
         .timeline-item {
             opacity: 0;
             transform: translateX(-50px);
             transition: all 0.6s ease;
+            cursor: pointer;
         }
+        
         .timeline-item.animate {
             opacity: 1;
             transform: translateX(0);
-        }
-
-        /* Estilo para los botones que deben parecer divs o tarjetas */
-        .interactive-button {
-            background: none;
-            color: inherit;
-            border: none;
-            padding: 0;
-            font: inherit;
-            cursor: pointer;
-            outline: inherit;
-            text-align: left;
-            width: 100%;
-        }
-        .interactive-button:focus-visible {
-            outline: 2px solid #4f46e5;
-            outline-offset: 4px;
-            border-radius: 0.75rem;
-        }
-
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
         .expandable-content {
@@ -59,48 +72,87 @@
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
-        /* El estado expandido se controla mediante el atributo data-expanded */
-        .expandable-content[data-expanded="true"] {
-            max-height: 1000px; /* Suficientemente grande para el contenido */
+        
+        .expandable-content.expanded {
+            max-height: 1000px;
         }
         
-        .rotate-icon { transition: transform 0.3s ease; }
-        .rotate-icon[data-rotated="true"] { transform: rotate(180deg); }
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .interactive-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
         
         .modal {
-            display: none; /* Se mostrará con JS */
+            display: none;
             position: fixed;
             z-index: 1000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease;
         }
-        .modal.is-open { display: flex; }
+        
         .modal-content {
             background-color: white;
-            margin: auto;
+            margin: 5% auto;
+            padding: 0;
             border-radius: 15px;
             width: 90%;
             max-width: 800px;
-            max-height: 90vh;
+            max-height: 80vh;
             overflow-y: auto;
             animation: modalSlideIn 0.3s ease;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes modalSlideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .quiz-option { transition: all 0.3s ease; }
-        .quiz-option:hover { background-color: rgba(255, 255, 255, 0.2); transform: translateX(5px); }
-        .quiz-option.correct { background-color: #dcfce7; border-color: #16a34a; color: #15803d; }
-        .quiz-option.incorrect { background-color: #fef2f2; border-color: #dc2626; color: #b91c1c; }
-
+        
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .progress-bar {
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            background-color: #f3f4f6;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.correct {
+            background-color: #dcfce7;
+            border-color: #16a34a;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: #fef2f2;
+            border-color: #dc2626;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
-
-    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-8">
         <div class="container mx-auto px-6">
             <div class="text-center fade-in">
                 <h1 class="text-4xl md:text-6xl font-bold mb-4">🩺 Inocuidad y Calidad Alimentaria</h1>
@@ -109,253 +161,1020 @@
                     <p class="text-lg">🎓 Curso Universitario</p>
                     <p class="text-sm mt-2">Primer día de clases</p>
                 </div>
+                
+                <!-- Progress Bar -->
+                <div class="mt-6 max-w-md mx-auto">
+                    <div class="bg-white/20 rounded-full h-2">
+                        <div id="progressBar" class="progress-bar bg-white rounded-full h-2"></div>
+                    </div>
+                    <p class="text-sm mt-2">Progreso del curso: <span id="progressText">0%</span></p>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- Bienvenida Interactiva -->
     <section class="py-12">
         <div class="container mx-auto px-6">
-            <div class="bg-white rounded-2xl shadow-xl p-8 fade-in">
-                <button type="button" data-toggle="accordion" aria-expanded="false" aria-controls="welcomeDetails" class="interactive-button">
-                    <div class="text-center mb-4">
-                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center justify-center">
-                            ¡Bienvenidos al Curso! 👋
-                            <svg data-icon="accordion" class="w-6 h-6 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </h2>
-                        <p class="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                            Sean bienvenidos futuros Médicos Veterinarios Zootecnistas. Este curso es una pieza fundamental en su formación. Nuestra responsabilidad va mucho más allá de la clínica:
-                            <span class="font-semibold text-indigo-600">somos los garantes de la salud pública desde la alimentación.</span>
-                        </p>
-                        <p class="text-sm text-gray-500 mt-2">Haz clic para ver más detalles</p>
-                    </div>
-                </button>
+            <div class="bg-white rounded-2xl shadow-xl p-8 fade-in interactive-card" onclick="toggleWelcomeDetails()">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center justify-center">
+                        ¡Bienvenidos al Curso! 👋
+                        <svg id="welcomeIcon" class="w-6 h-6 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                        Sean bienvenidos futuros Médicos Veterinarios Zootecnistas. Este curso es una pieza fundamental 
+                        en su formación. Nuestra responsabilidad va mucho más allá de la clínica: 
+                        <span class="font-semibold text-indigo-600">somos los garantes de la salud pública desde la alimentación.</span>
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">Haz clic para ver más detalles</p>
+                </div>
+                
                 <div id="welcomeDetails" class="expandable-content">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h3 class="font-bold text-blue-800 mb-3">🎯 Enfoque Práctico</h3>
+                            <p class="text-sm text-gray-700">Aplicaremos conocimientos reales en situaciones que enfrentarán en su carrera profesional.</p>
                         </div>
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h3 class="font-bold text-green-800 mb-3">🌍 Impacto Global</h3>
+                            <p class="text-sm text-gray-700">Su trabajo protegerá la salud de millones de personas y abrirá mercados internacionales.</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-6">
+                            <h3 class="font-bold text-purple-800 mb-3">🚀 Futuro Profesional</h3>
+                            <p class="text-sm text-gray-700">Desarrollarán competencias para trabajar en rastros, plantas procesadoras y como consultores.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Cadena Alimentaria Interactiva Mejorada -->
     <section class="py-12">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">🔗 La Cadena de Confianza Alimentaria</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-white">
-                <button type="button" data-modal-trigger="chainModal" data-content-id="granja" class="interactive-button card-hover bg-green-500 rounded-xl p-6 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="chain-link bg-green-500 text-white rounded-xl p-6 text-center card-hover" onclick="showChainModal('granja')">
                     <div class="text-4xl mb-4">🚜</div>
                     <h3 class="font-bold text-lg">Granja</h3>
                     <p class="text-sm mt-2">Origen de todo</p>
-                </button>
-                <button type="button" data-modal-trigger="chainModal" data-content-id="transporte" class="interactive-button card-hover bg-blue-500 rounded-xl p-6 text-center">
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1">Clic para explorar</div>
+                </div>
+                <div class="chain-link bg-blue-500 text-white rounded-xl p-6 text-center card-hover" onclick="showChainModal('transporte')">
                     <div class="text-4xl mb-4">🚛</div>
                     <h3 class="font-bold text-lg">Transporte</h3>
                     <p class="text-sm mt-2">Mantenimiento seguro</p>
-                </button>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1">Clic para explorar</div>
                 </div>
+                <div class="chain-link bg-purple-500 text-white rounded-xl p-6 text-center card-hover" onclick="showChainModal('procesamiento')">
+                    <div class="text-4xl mb-4">🏭</div>
+                    <h3 class="font-bold text-lg">Procesamiento</h3>
+                    <p class="text-sm mt-2">Transformación controlada</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1">Clic para explorar</div>
+                </div>
+                <div class="chain-link bg-orange-500 text-white rounded-xl p-6 text-center card-hover" onclick="showChainModal('consumidor')">
+                    <div class="text-4xl mb-4">🛒</div>
+                    <h3 class="font-bold text-lg">Consumidor</h3>
+                    <p class="text-sm mt-2">Confianza final</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1">Clic para explorar</div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Rol del Veterinario Interactivo -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-6">
-             <div class="text-center mb-12">
+            <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-800 mb-6">🛡️ El Veterinario: Guardián de la Inocuidad</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Somos el profesional con conocimiento integral para supervisar la salud animal, 
+                    la higiene del proceso y la calidad del producto final.
+                </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-white">
-                <button type="button" data-modal-trigger="roleModal" data-content-id="inspector" class="interactive-button card-hover bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6">
-                     <div class="text-3xl mb-4">🔍</div>
-                     <h3 class="font-bold text-lg mb-2">Inspectores</h3>
-                     <p class="text-sm">Verificamos el cumplimiento de normas</p>
-                </button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 card-hover interactive-card" onclick="showRoleDetails('inspector')">
+                    <div class="text-3xl mb-4">🔍</div>
+                    <h3 class="font-bold text-lg mb-2">Inspectores</h3>
+                    <p class="text-sm">Verificamos el cumplimiento de normas</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Ver detalles</div>
                 </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 card-hover interactive-card" onclick="showRoleDetails('verificador')">
+                    <div class="text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-2">Verificadores</h3>
+                    <p class="text-sm">Validamos procesos y sistemas</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Ver detalles</div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 card-hover interactive-card" onclick="showRoleDetails('asesor')">
+                    <div class="text-3xl mb-4">💡</div>
+                    <h3 class="font-bold text-lg mb-2">Asesores</h3>
+                    <p class="text-sm">Guiamos en mejores prácticas</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Ver detalles</div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-6 card-hover interactive-card" onclick="showRoleDetails('capacitador')">
+                    <div class="text-3xl mb-4">📚</div>
+                    <h3 class="font-bold text-lg mb-2">Capacitadores</h3>
+                    <p class="text-sm">Educamos sobre inocuidad</p>
+                    <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Ver detalles</div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Definiciones Clave Interactivas -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">📖 Definiciones Fundamentales</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6">
+                        <h3 class="text-2xl font-bold mb-4">🆚 Calidad vs. Inocuidad Alimentaria</h3>
+                        <p class="text-lg">Entendamos la diferencia con una analogía simple:</p>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="text-center interactive-card" onclick="showDefinitionQuiz('calidad')">
+                                <div class="bg-blue-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                                    <span class="text-3xl">🚗</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-blue-600 mb-3">CALIDAD</h4>
+                                <div class="bg-blue-50 rounded-lg p-4">
+                                    <p class="text-sm text-gray-700 mb-2"><strong>En un coche:</strong></p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Asientos de piel</li>
+                                        <li>• Color brillante</li>
+                                        <li>• Sistema de sonido</li>
+                                    </ul>
+                                    <p class="text-sm text-gray-700 mt-3 mb-2"><strong>En un filete:</strong></p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Terneza</li>
+                                        <li>• Marmoleo</li>
+                                        <li>• Color atractivo</li>
+                                    </ul>
+                                </div>
+                                <p class="text-sm text-blue-600 mt-3 font-medium">Atributos deseables</p>
+                                <div class="mt-2 text-xs bg-blue-100 text-blue-800 rounded-full px-3 py-1 inline-block">Clic para quiz</div>
+                            </div>
+                            
+                            <div class="text-center interactive-card" onclick="showDefinitionQuiz('inocuidad')">
+                                <div class="bg-red-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center pulse-animation">
+                                    <span class="text-3xl">🛡️</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-red-600 mb-3">INOCUIDAD</h4>
+                                <div class="bg-red-50 rounded-lg p-4">
+                                    <p class="text-sm text-gray-700 mb-2"><strong>En un coche:</strong></p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Los frenos funcionan</li>
+                                        <li>• Cinturones de seguridad</li>
+                                        <li>• Luces operativas</li>
+                                    </ul>
+                                    <p class="text-sm text-gray-700 mt-3 mb-2"><strong>En un alimento:</strong></p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Libre de patógenos</li>
+                                        <li>• Sin contaminantes</li>
+                                        <li>• Apto para consumo</li>
+                                    </ul>
+                                </div>
+                                <p class="text-sm text-red-600 mt-3 font-bold">¡NO ES NEGOCIABLE!</p>
+                                <div class="mt-2 text-xs bg-red-100 text-red-800 rounded-full px-3 py-1 inline-block">Clic para quiz</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cronograma del Curso Interactivo -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">🗓️ Nuestro Viaje de Aprendizaje</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-indigo-300"></div>
+                    
+                    <div class="timeline-item mb-8" onclick="toggleTimelineDetails('unit1')">
+                        <div class="flex items-start">
+                            <div class="bg-indigo-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg mr-6">1</div>
+                            <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                    Marco Conceptual y Jurídico
+                                    <svg id="unit1Icon" class="w-5 h-5 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </h3>
+                                <p class="text-gray-600">Fundamentos, definiciones y leyes que rigen nuestro actuar profesional</p>
+                                <div class="mt-3 text-sm text-indigo-600 font-medium">📍 Estamos aquí - Unidad 1</div>
+                                
+                                <div id="unit1Details" class="expandable-content mt-4">
+                                    <div class="bg-indigo-50 rounded-lg p-4">
+                                        <h4 class="font-bold text-indigo-800 mb-2">Temas a cubrir:</h4>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Definiciones básicas de inocuidad y calidad</li>
+                                            <li>• Marco legal nacional e internacional</li>
+                                            <li>• Rol del veterinario en la cadena alimentaria</li>
+                                            <li>• Organismos reguladores (SENASICA, FDA, etc.)</li>
+                                            <li>• Normatividad mexicana (NOM-194-SSA1)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item mb-8" onclick="toggleTimelineDetails('unit2')">
+                        <div class="flex items-start">
+                            <div class="bg-gray-400 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg mr-6">2</div>
+                            <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                    Métodos de Inspección
+                                    <svg id="unit2Icon" class="w-5 h-5 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </h3>
+                                <p class="text-gray-600">Técnicas para verificar que los alimentos sean seguros</p>
+                                
+                                <div id="unit2Details" class="expandable-content mt-4">
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2">Temas a cubrir:</h4>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Inspección ante-mortem y post-mortem</li>
+                                            <li>• Técnicas de muestreo</li>
+                                            <li>• Análisis organoléptico</li>
+                                            <li>• Uso de instrumentos de medición</li>
+                                            <li>• Documentación y registros</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item mb-8" onclick="toggleTimelineDetails('unit3')">
+                        <div class="flex items-start">
+                            <div class="bg-gray-400 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg mr-6">3</div>
+                            <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                    Alteración y Contaminación
+                                    <svg id="unit3Icon" class="w-5 h-5 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </h3>
+                                <p class="text-gray-600">Cómo se alteran y contaminan los productos de origen animal</p>
+                                
+                                <div id="unit3Details" class="expandable-content mt-4">
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2">Temas a cubrir:</h4>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Tipos de contaminación (física, química, biológica)</li>
+                                            <li>• Factores que favorecen la alteración</li>
+                                            <li>• Indicadores de deterioro</li>
+                                            <li>• Contaminación cruzada</li>
+                                            <li>• Medidas preventivas</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item mb-8" onclick="toggleTimelineDetails('unit4')">
+                        <div class="flex items-start">
+                            <div class="bg-gray-400 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg mr-6">4</div>
+                            <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                    Microorganismos
+                                    <svg id="unit4Icon" class="w-5 h-5 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </h3>
+                                <p class="text-gray-600">Estudio de los microorganismos que afectan la inocuidad</p>
+                                <div class="mt-3 text-sm text-red-600 font-medium">⚠️ Primer examen parcial (Unidades 1-4)</div>
+                                
+                                <div id="unit4Details" class="expandable-content mt-4">
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2">Temas a cubrir:</h4>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Bacterias patógenas (Salmonella, E. coli, Listeria)</li>
+                                            <li>• Virus transmitidos por alimentos</li>
+                                            <li>• Parásitos en productos cárnicos</li>
+                                            <li>• Factores de crecimiento microbiano</li>
+                                            <li>• Métodos de control microbiológico</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" onclick="toggleTimelineDetails('unit5')">
+                        <div class="flex items-start">
+                            <div class="bg-gray-400 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg mr-6">5+</div>
+                            <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                    Sistemas Modernos
+                                    <svg id="unit5Icon" class="w-5 h-5 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </h3>
+                                <p class="text-gray-600">BPM, HACCP y métodos de conservación avanzados</p>
+                                
+                                <div id="unit5Details" class="expandable-content mt-4">
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2">Temas a cubrir:</h4>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Buenas Prácticas de Manufactura (BPM)</li>
+                                            <li>• Sistema HACCP (Análisis de Peligros y Puntos Críticos)</li>
+                                            <li>• Métodos de conservación modernos</li>
+                                            <li>• Trazabilidad y rastreabilidad</li>
+                                            <li>• Certificaciones internacionales</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objetivos del Curso Interactivos -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-2xl p-8">
+                <h2 class="text-3xl font-bold text-center mb-8">🎯 Nuestros Objetivos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 interactive-card" onclick="showObjectiveDetails('comprension')">
+                        <div class="text-4xl mb-4">🧠</div>
+                        <h3 class="text-xl font-bold mb-3">Comprensión Profunda</h3>
+                        <p>No memorizar conceptos, sino entender la lógica detrás de cada control y proceso de inocuidad alimentaria.</p>
+                        <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Explorar más</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 interactive-card" onclick="showObjectiveDetails('responsabilidad')">
+                        <div class="text-4xl mb-4">⚖️</div>
+                        <h3 class="text-xl font-bold mb-3">Responsabilidad Profesional</h3>
+                        <p>Comprender la enorme responsabilidad que tendrán en rastros, plantas procesadoras o como asesores.</p>
+                        <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">Explorar más</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Interactivo -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">🧠 Quiz de Conocimientos</h2>
+                <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl p-8">
+                    <div id="quizContainer">
+                        <h3 class="text-xl font-bold mb-6">Pregunta 1: ¿Cuál es la diferencia principal entre calidad e inocuidad?</h3>
+                        <div class="space-y-3">
+                            <div class="quiz-option bg-white/10 rounded-lg p-4 border-2 border-transparent" onclick="selectQuizOption(this, false)">
+                                A) No hay diferencia, son sinónimos
+                            </div>
+                            <div class="quiz-option bg-white/10 rounded-lg p-4 border-2 border-transparent" onclick="selectQuizOption(this, true)">
+                                B) La calidad son atributos deseables, la inocuidad es seguridad no negociable
+                            </div>
+                            <div class="quiz-option bg-white/10 rounded-lg p-4 border-2 border-transparent" onclick="selectQuizOption(this, false)">
+                                C) La calidad es más importante que la inocuidad
+                            </div>
+                            <div class="quiz-option bg-white/10 rounded-lg p-4 border-2 border-transparent" onclick="selectQuizOption(this, false)">
+                                D) Solo la calidad importa en los alimentos
+                            </div>
+                        </div>
+                        <div id="quizFeedback" class="mt-6 hidden">
+                            <div class="bg-white/20 rounded-lg p-4">
+                                <p id="feedbackText" class="font-bold"></p>
+                                <p id="explanationText" class="mt-2 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-6 text-center">
-            <p>Formando guardianes de la salud pública alimentaria</p>
+            <p class="text-lg mb-2">🩺 Curso de Inocuidad y Calidad Alimentaria</p>
+            <p class="text-gray-400">Formando guardianes de la salud pública alimentaria</p>
+            <div class="mt-4 text-sm text-gray-500">
+                <p>Próxima clase: Continuamos con Marco Conceptual y Jurídico</p>
+            </div>
         </div>
     </footer>
 
-    <div id="mainModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <!-- Modales -->
+    <div id="chainModal" class="modal">
         <div class="modal-content">
-            <div id="modalHeader" class="p-6 text-white rounded-t-lg">
+            <div id="modalHeader" class="p-6 text-white rounded-t-2xl">
                 <div class="flex justify-between items-center">
                     <h2 id="modalTitle" class="text-2xl font-bold"></h2>
-                    <button type="button" data-dismiss="modal" class="text-white hover:text-gray-200" aria-label="Cerrar modal">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <button onclick="closeModal('chainModal')" class="text-white hover:text-gray-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
-            <div id="modalBody" class="p-8">
-                </div>
+            <div id="modalContent" class="p-6">
+                <!-- Contenido dinámico -->
+            </div>
         </div>
     </div>
 
-    <template id="granja">
-        <div class="space-y-6">
-            <p class="text-lg text-gray-700">En la granja comienza nuestra responsabilidad como veterinarios sanitaristas.</p>
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-                <p class="text-sm text-gray-700"><strong>Punto clave:</strong> Un animal sano es el primer eslabón de un alimento seguro.</p>
+    <div id="roleModal" class="modal">
+        <div class="modal-content">
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-t-2xl">
+                <div class="flex justify-between items-center">
+                    <h2 id="roleModalTitle" class="text-2xl font-bold"></h2>
+                    <button onclick="closeModal('roleModal')" class="text-white hover:text-gray-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="roleModalContent" class="p-6">
+                <!-- Contenido dinámico -->
             </div>
         </div>
-    </template>
-    
-    <template id="transporte">
-         <div class="space-y-6">
-            <p class="text-lg text-gray-700">El transporte es un punto crítico donde pueden perderse todos los cuidados previos.</p>
-            <div class="bg-red-50 border-l-4 border-red-400 p-4">
-                <p class="text-sm text-gray-700"><strong>Riesgo crítico:</strong> La contaminación cruzada durante el transporte puede comprometer lotes completos.</p>
-            </div>
-        </div>
-    </template>
+    </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // --- CONFIGURACIÓN DE DATOS ---
-        // Se mantiene aquí la información que no es contenido, como colores o títulos cortos.
-        const modalData = {
-            granja: { title: "🚜 Granja - El Origen de Todo", color: "from-green-500 to-green-600" },
-            transporte: { title: "🚛 Transporte - Mantenimiento Seguro", color: "from-blue-500 to-blue-600" },
-            procesamiento: { title: "🏭 Procesamiento - Transformación Controlada", color: "from-purple-500 to-purple-600" },
-            consumidor: { title: "🛒 Consumidor - Confianza Final", color: "from-orange-500 to-orange-600" },
-            inspector: { title: "🔍 Inspector Veterinario", color: "from-blue-500 to-blue-600" },
-            // ... otros datos
+        // Variables globales
+        let currentProgress = 0;
+
+        // Animaciones de entrada
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        const modal = document.getElementById('mainModal');
-        const modalHeader = document.getElementById('modalHeader');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-
-        // --- MANEJO DE EVENTOS CENTRALIZADO (EVENT DELEGATION) ---
-        document.body.addEventListener('click', (e) => {
-            const button = e.target.closest('button');
-            if (!button) return;
-
-            // Delegación para los acordeones
-            if (button.dataset.toggle === 'accordion') {
-                toggleAccordion(button);
-            }
-
-            // Delegación para abrir modales
-            if (button.dataset.modalTrigger) {
-                openModal(button.dataset.contentId);
-            }
-
-            // Delegación para cerrar modales
-            if (button.dataset.dismiss === 'modal') {
-                closeModal();
-            }
-
-            // Delegación para el Quiz
-            if (button.dataset.quizOption) {
-                handleQuizSelection(button);
-            }
-        });
-
-        // --- LÓGICA DE LOS COMPONENTES ---
-
-        function toggleAccordion(button) {
-            const isExpanded = button.getAttribute('aria-expanded') === 'true';
-            const content = document.getElementById(button.getAttribute('aria-controls'));
-            const icon = button.querySelector('[data-icon="accordion"]');
-
-            button.setAttribute('aria-expanded', !isExpanded);
-            content.dataset.expanded = !isExpanded;
-            if (icon) icon.dataset.rotated = !isExpanded;
-        }
-
-        function openModal(contentId) {
-            const data = modalData[contentId];
-            const template = document.getElementById(contentId);
-
-            if (!data || !template) {
-                console.error(`Contenido o datos no encontrados para el id: ${contentId}`);
-                return;
-            }
-
-            // Poblar y estilizar el modal
-            modalHeader.className = `p-6 text-white rounded-t-lg bg-gradient-to-r ${data.color}`;
-            modalTitle.textContent = data.title;
-            modalBody.innerHTML = ''; // Limpiar contenido anterior
-            modalBody.appendChild(template.content.cloneNode(true));
-            
-            // Mostrar modal y enfocar para accesibilidad
-            modal.classList.add('is-open');
-            document.body.style.overflow = 'hidden'; // Evitar scroll del fondo
-            modal.querySelector('button[data-dismiss="modal"]').focus();
-        }
-
-        function closeModal() {
-            modal.classList.remove('is-open');
-            document.body.style.overflow = '';
-        }
-        
-        function handleQuizSelection(button) {
-            const isCorrect = button.dataset.correct === 'true';
-            const quizContainer = button.closest('[data-quiz-container]');
-            const feedbackEl = quizContainer.querySelector('[data-quiz-feedback]');
-            const explanationText = button.dataset.explanation || (isCorrect ? "¡Excelente! Has entendido el concepto clave." : "Revisa la sección de definiciones para aclarar la diferencia.");
-
-            // Deshabilitar todas las opciones
-            quizContainer.querySelectorAll('[data-quiz-option]').forEach(opt => {
-                opt.disabled = true;
-                // Marcar la respuesta correcta si la seleccionada es incorrecta
-                if (!isCorrect && opt.dataset.correct === 'true') {
-                    opt.classList.add('correct');
-                }
-            });
-
-            // Estilizar la opción seleccionada
-            button.classList.add(isCorrect ? 'correct' : 'incorrect');
-            
-            // Mostrar feedback
-            feedbackEl.innerHTML = `<p class="font-bold ${isCorrect ? 'text-green-200' : 'text-red-200'}">${isCorrect ? '¡Correcto! 🎉' : 'Incorrecto 😔'}</p><p class="mt-2 text-sm">${explanationText}</p>`;
-            feedbackEl.classList.remove('hidden');
-        }
-
-        // Cerrar modal con la tecla Escape
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-                closeModal();
-            }
-        });
-
-        // Cerrar modal al hacer clic fuera del contenido
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // --- ANIMACIONES DE SCROLL (INTERSECTION OBSERVER) ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Dejar de observar una vez animado
+                    updateProgress();
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        
+        // Observar elementos fade-in
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animación de timeline
         const timelineObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('animate');
                     }, index * 200);
-                    timelineObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        document.querySelectorAll('.timeline-item').forEach(el => timelineObserver.observe(el));
-    });
+        document.querySelectorAll('.timeline-item').forEach(el => {
+            timelineObserver.observe(el);
+        });
+
+        // Función para actualizar progreso
+        function updateProgress() {
+            currentProgress = Math.min(currentProgress + 15, 100);
+            document.getElementById('progressBar').style.width = currentProgress + '%';
+            document.getElementById('progressText').textContent = currentProgress + '%';
+        }
+
+        // Toggle para detalles de bienvenida
+        function toggleWelcomeDetails() {
+            const details = document.getElementById('welcomeDetails');
+            const icon = document.getElementById('welcomeIcon');
+            
+            details.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
+            updateProgress();
+        }
+
+        // Toggle para detalles de timeline
+        function toggleTimelineDetails(unitId) {
+            const details = document.getElementById(unitId + 'Details');
+            const icon = document.getElementById(unitId + 'Icon');
+            
+            details.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
+            updateProgress();
+        }
+
+        // Información detallada de la cadena alimentaria
+        const chainInfo = {
+            granja: {
+                title: "🚜 Granja - El Origen de Todo",
+                color: "from-green-500 to-green-600",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">En la granja comienza nuestra responsabilidad como veterinarios sanitaristas.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3">🐄 Salud Animal</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Programas de vacunación</li>
+                                    <li>• Control de enfermedades</li>
+                                    <li>• Bienestar animal</li>
+                                    <li>• Registros sanitarios</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h4 class="font-bold text-blue-800 mb-3">🌾 Alimentación</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Calidad de forrajes</li>
+                                    <li>• Agua potable</li>
+                                    <li>• Suplementos seguros</li>
+                                    <li>• Control de micotoxinas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Punto clave:</strong> Un animal sano es el primer eslabón de un alimento seguro. 
+                                Aquí prevenimos enfermedades que podrían transmitirse al consumidor.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            transporte: {
+                title: "🚛 Transporte - Mantenimiento Seguro",
+                color: "from-blue-500 to-blue-600",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">El transporte es un punto crítico donde pueden perderse todos los cuidados previos.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h4 class="font-bold text-blue-800 mb-3">🌡️ Control de Temperatura</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Cadena de frío</li>
+                                    <li>• Monitoreo continuo</li>
+                                    <li>• Equipos calibrados</li>
+                                    <li>• Registros de temperatura</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <h4 class="font-bold text-purple-800 mb-3">🧼 Higiene</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Limpieza de vehículos</li>
+                                    <li>• Desinfección</li>
+                                    <li>• Separación de productos</li>
+                                    <li>• Personal capacitado</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Riesgo crítico:</strong> La contaminación cruzada durante el transporte 
+                                puede comprometer lotes completos de productos.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            procesamiento: {
+                title: "🏭 Procesamiento - Transformación Controlada",
+                color: "from-purple-500 to-purple-600",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">En las plantas procesadoras aplicamos los sistemas más avanzados de control.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <h4 class="font-bold text-purple-800 mb-3">🔍 HACCP</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Análisis de peligros</li>
+                                    <li>• Puntos críticos</li>
+                                    <li>• Límites críticos</li>
+                                    <li>• Monitoreo</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3">✅ BPM</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Buenas prácticas</li>
+                                    <li>• Higiene personal</li>
+                                    <li>• Sanitización</li>
+                                    <li>• Control de plagas</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-800 mb-3">📊 Trazabilidad</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Rastreabilidad</li>
+                                    <li>• Lotes identificados</li>
+                                    <li>• Registros completos</li>
+                                    <li>• Recall efectivo</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Decisión crítica:</strong> Aquí se decide si el producto final será seguro para el consumo. 
+                                Cada punto crítico debe estar bajo control.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            consumidor: {
+                title: "🛒 Consumidor - Confianza Final",
+                color: "from-orange-500 to-orange-600",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">El consumidor es el destinatario final de todo nuestro trabajo profesional.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-orange-50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-800 mb-3">🛡️ Protección</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Prevención de ETAs</li>
+                                    <li>• Productos seguros</li>
+                                    <li>• Información veraz</li>
+                                    <li>• Etiquetado correcto</li>
+                                </ul>
+                            </div>
+                            <div class="bg-teal-50 rounded-lg p-4">
+                                <h4 class="font-bold text-teal-800 mb-3">🌍 Impacto</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Salud pública</li>
+                                    <li>• Confianza del mercado</li>
+                                    <li>• Exportaciones</li>
+                                    <li>• Economía nacional</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Resultado final:</strong> La confianza del consumidor es el resultado de cada decisión 
+                                profesional que tomamos en toda la cadena alimentaria.
+                            </p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Información de roles del veterinario
+        const roleInfo = {
+            inspector: {
+                title: "🔍 Inspector Veterinario",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">Como inspectores, somos los ojos y oídos de la seguridad alimentaria.</p>
+                        
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h4 class="font-bold text-blue-800 mb-4">Responsabilidades principales:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Inspección ante-mortem de animales</li>
+                                    <li>• Inspección post-mortem de canales</li>
+                                    <li>• Verificación de BPM</li>
+                                    <li>• Control de documentación</li>
+                                </ul>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Muestreo para análisis</li>
+                                    <li>• Evaluación organoléptica</li>
+                                    <li>• Aplicación de normativas</li>
+                                    <li>• Emisión de dictámenes</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Lugares de trabajo:</strong> Rastros TIF, plantas procesadoras, 
+                                centros de distribución, puntos de exportación.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            verificador: {
+                title: "✅ Verificador de Sistemas",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">Los verificadores validamos que los sistemas de calidad funcionen correctamente.</p>
+                        
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h4 class="font-bold text-green-800 mb-4">Funciones especializadas:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Auditorías de HACCP</li>
+                                    <li>• Verificación de BPM</li>
+                                    <li>• Validación de procesos</li>
+                                    <li>• Revisión de registros</li>
+                                </ul>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Evaluación de riesgos</li>
+                                    <li>• Certificación de sistemas</li>
+                                    <li>• Seguimiento correctivo</li>
+                                    <li>• Reportes técnicos</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Certificaciones requeridas:</strong> Conocimiento en ISO 22000, 
+                                HACCP, BRC, SQF y otros estándares internacionales.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            asesor: {
+                title: "💡 Asesor Técnico",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">Como asesores, guiamos a las empresas hacia la excelencia en inocuidad.</p>
+                        
+                        <div class="bg-purple-50 rounded-lg p-6">
+                            <h4 class="font-bold text-purple-800 mb-4">Servicios de consultoría:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Diseño de sistemas HACCP</li>
+                                    <li>• Implementación de BPM</li>
+                                    <li>• Análisis de riesgos</li>
+                                    <li>• Mejora continua</li>
+                                </ul>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Preparación para auditorías</li>
+                                    <li>• Solución de no conformidades</li>
+                                    <li>• Desarrollo de procedimientos</li>
+                                    <li>• Estudios de vida útil</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Oportunidad de negocio:</strong> La consultoría en inocuidad es un campo 
+                                en crecimiento con excelentes oportunidades económicas.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            capacitador: {
+                title: "📚 Capacitador Especializado",
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-700">Los capacitadores formamos a la siguiente generación de profesionales en inocuidad.</p>
+                        
+                        <div class="bg-orange-50 rounded-lg p-6">
+                            <h4 class="font-bold text-orange-800 mb-4">Áreas de capacitación:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Manipulación higiénica</li>
+                                    <li>• Sistemas HACCP</li>
+                                    <li>• Buenas prácticas</li>
+                                    <li>• Normatividad vigente</li>
+                                </ul>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li>• Microbiología aplicada</li>
+                                    <li>• Control de plagas</li>
+                                    <li>• Limpieza y desinfección</li>
+                                    <li>• Cultura de inocuidad</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Impacto multiplicador:</strong> Un buen capacitador puede influir en 
+                                miles de personas, multiplicando el impacto en la seguridad alimentaria.
+                            </p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Mostrar modal de cadena alimentaria
+        function showChainModal(stage) {
+            const modal = document.getElementById('chainModal');
+            const header = document.getElementById('modalHeader');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            const info = chainInfo[stage];
+            
+            header.className = `p-6 text-white rounded-t-2xl bg-gradient-to-r ${info.color}`;
+            title.textContent = info.title;
+            content.innerHTML = info.content;
+            
+            modal.style.display = 'block';
+            updateProgress();
+        }
+
+        // Mostrar detalles de roles
+        function showRoleDetails(role) {
+            const modal = document.getElementById('roleModal');
+            const title = document.getElementById('roleModalTitle');
+            const content = document.getElementById('roleModalContent');
+            const info = roleInfo[role];
+            
+            title.textContent = info.title;
+            content.innerHTML = info.content;
+            
+            modal.style.display = 'block';
+            updateProgress();
+        }
+
+        // Mostrar detalles de objetivos
+        function showObjectiveDetails(objective) {
+            const objectives = {
+                comprension: {
+                    title: "🧠 Comprensión Profunda",
+                    content: `
+                        <div class="space-y-4">
+                            <p class="text-gray-700">Nuestro enfoque va más allá de la memorización. Queremos que entiendan:</p>
+                            <ul class="text-gray-600 space-y-2">
+                                <li>• <strong>El porqué</strong> detrás de cada procedimiento</li>
+                                <li>• <strong>La lógica</strong> de los controles establecidos</li>
+                                <li>• <strong>Las consecuencias</strong> de no seguir protocolos</li>
+                                <li>• <strong>La interconexión</strong> entre todos los procesos</li>
+                            </ul>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="text-sm text-blue-800">
+                                    <strong>Metodología:</strong> Casos reales, simulaciones, análisis de brotes 
+                                    y visitas a plantas procesadoras.
+                                </p>
+                            </div>
+                        </div>
+                    `
+                },
+                responsabilidad: {
+                    title: "⚖️ Responsabilidad Profesional",
+                    content: `
+                        <div class="space-y-4">
+                            <p class="text-gray-700">Como veterinarios sanitaristas, tendrán una responsabilidad enorme:</p>
+                            <ul class="text-gray-600 space-y-2">
+                                <li>• <strong>Salud pública:</strong> Proteger a millones de consumidores</li>
+                                <li>• <strong>Economía:</strong> Facilitar el comercio nacional e internacional</li>
+                                <li>• <strong>Reputación:</strong> Mantener la confianza en los productos mexicanos</li>
+                                <li>• <strong>Ética profesional:</strong> Actuar con integridad y conocimiento</li>
+                            </ul>
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <p class="text-sm text-red-800">
+                                    <strong>Recordatorio:</strong> Una decisión incorrecta puede afectar la salud 
+                                    de miles de personas y cerrar mercados internacionales.
+                                </p>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const modal = document.getElementById('roleModal');
+            const title = document.getElementById('roleModalTitle');
+            const content = document.getElementById('roleModalContent');
+            const info = objectives[objective];
+            
+            title.textContent = info.title;
+            content.innerHTML = info.content;
+            
+            modal.style.display = 'block';
+            updateProgress();
+        }
+
+        // Quiz de definiciones
+        function showDefinitionQuiz(type) {
+            const quizzes = {
+                calidad: {
+                    question: "¿Cuál de estos es un ejemplo de CALIDAD en un producto cárnico?",
+                    options: [
+                        { text: "Ausencia de Salmonella", correct: false },
+                        { text: "Marmoleo atractivo", correct: true },
+                        { text: "Temperatura de refrigeración", correct: false },
+                        { text: "Fecha de caducidad vigente", correct: false }
+                    ],
+                    explanation: "El marmoleo es un atributo de calidad que hace el producto más deseable, pero no afecta su seguridad."
+                },
+                inocuidad: {
+                    question: "¿Cuál de estos es un ejemplo de INOCUIDAD en un producto cárnico?",
+                    options: [
+                        { text: "Color rojo brillante", correct: false },
+                        { text: "Ausencia de patógenos", correct: true },
+                        { text: "Textura suave", correct: false },
+                        { text: "Sabor agradable", correct: false }
+                    ],
+                    explanation: "La ausencia de patógenos es fundamental para la inocuidad - es seguridad no negociable."
+                }
+            };
+            
+            const quiz = quizzes[type];
+            const container = document.getElementById('quizContainer');
+            
+            container.innerHTML = `
+                <h3 class="text-xl font-bold mb-6">${quiz.question}</h3>
+                <div class="space-y-3">
+                    ${quiz.options.map((option, index) => `
+                        <div class="quiz-option bg-white/10 rounded-lg p-4 border-2 border-transparent" 
+                             onclick="selectQuizOption(this, ${option.correct}, '${quiz.explanation}')">
+                            ${String.fromCharCode(65 + index)}) ${option.text}
+                        </div>
+                    `).join('')}
+                </div>
+                <div id="quizFeedback" class="mt-6 hidden">
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <p id="feedbackText" class="font-bold"></p>
+                        <p id="explanationText" class="mt-2 text-sm"></p>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        // Seleccionar opción de quiz
+        function selectQuizOption(element, isCorrect, explanation = '') {
+            const allOptions = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('quizFeedback');
+            const feedbackText = document.getElementById('feedbackText');
+            const explanationText = document.getElementById('explanationText');
+            
+            // Deshabilitar todas las opciones
+            allOptions.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Marcar la opción seleccionada
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedbackText.textContent = '¡Correcto! 🎉';
+                feedbackText.className = 'font-bold text-green-200';
+            } else {
+                element.classList.add('incorrect');
+                feedbackText.textContent = 'Incorrecto 😔';
+                feedbackText.className = 'font-bold text-red-200';
+                
+                // Mostrar la respuesta correcta
+                allOptions.forEach(option => {
+                    if (option.onclick.toString().includes('true')) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+            
+            explanationText.textContent = explanation;
+            feedback.classList.remove('hidden');
+            updateProgress();
+        }
+
+        // Cerrar modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const chainModal = document.getElementById('chainModal');
+            const roleModal = document.getElementById('roleModal');
+            
+            if (event.target === chainModal) {
+                chainModal.style.display = 'none';
+            }
+            if (event.target === roleModal) {
+                roleModal.style.display = 'none';
+            }
+        }
+
+        // Inicializar progreso
+        setTimeout(() => {
+            document.querySelector('header .fade-in').classList.add('visible');
+            updateProgress();
+        }, 500);
+
+        // Actualizar progreso cada 30 segundos de actividad
+        setInterval(() => {
+            if (currentProgress < 100) {
+                updateProgress();
+            }
+        }, 30000);
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b8bb3bc35f6a97',t:'MTc1NDU5MDIzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
