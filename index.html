@@ -529,6 +529,113 @@
         </div>
     </section>
 
+    <!-- Ejercicio Práctico con Imágenes -->
+    <section class="py-12 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🔍 Ejercicio Práctico</h2>
+                <p class="text-xl text-gray-600 mb-2">Distingue entre Calidad e Inocuidad</p>
+                <p class="text-lg text-gray-500">Observa las imágenes y identifica si el atributo mostrado corresponde a calidad o inocuidad</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Contador de progreso del ejercicio -->
+                <div class="bg-white rounded-lg shadow-lg p-4 mb-8">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-600">Progreso del Ejercicio</span>
+                        <span id="exerciseProgress" class="text-sm font-bold text-indigo-600">0/8</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="exerciseProgressBar" class="bg-indigo-500 rounded-full h-2 transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- Área del ejercicio -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6">
+                        <h3 class="text-2xl font-bold mb-2">Ejercicio Visual</h3>
+                        <p class="text-lg">Analiza la imagen y responde correctamente</p>
+                    </div>
+                    
+                    <div id="exerciseContainer" class="p-8">
+                        <!-- Botón para iniciar ejercicio -->
+                        <div id="exerciseStart" class="text-center">
+                            <div class="mb-8">
+                                <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-full w-32 h-32 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-6xl">🎯</span>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 mb-4">¿Listo para el desafío?</h4>
+                                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                                    Te mostraremos 8 imágenes diferentes de productos alimentarios. 
+                                    Tu tarea es identificar si el atributo destacado corresponde a 
+                                    <span class="font-bold text-blue-600">CALIDAD</span> o 
+                                    <span class="font-bold text-red-600">INOCUIDAD</span>.
+                                </p>
+                                <button onclick="startExercise()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                    🚀 Comenzar Ejercicio
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Área del ejercicio activo -->
+                        <div id="exerciseActive" class="hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Imagen del producto -->
+                                <div class="text-center">
+                                    <div id="exerciseImageContainer" class="bg-gray-100 rounded-xl p-6 mb-4 min-h-80 flex items-center justify-center">
+                                        <!-- Imagen SVG se insertará aquí -->
+                                    </div>
+                                    <p id="exerciseImageCaption" class="text-sm text-gray-600 italic"></p>
+                                </div>
+                                
+                                <!-- Pregunta y opciones -->
+                                <div class="flex flex-col justify-center">
+                                    <h4 id="exerciseQuestion" class="text-xl font-bold text-gray-800 mb-6"></h4>
+                                    
+                                    <div class="space-y-4">
+                                        <button id="qualityBtn" onclick="selectAnswer('calidad')" class="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-xl border-2 border-blue-300 transition-all duration-300 transform hover:scale-105">
+                                            🎨 CALIDAD
+                                            <div class="text-sm font-normal mt-1">Atributos deseables</div>
+                                        </button>
+                                        
+                                        <button id="safetyBtn" onclick="selectAnswer('inocuidad')" class="w-full bg-red-100 hover:bg-red-200 text-red-800 font-bold py-4 px-6 rounded-xl border-2 border-red-300 transition-all duration-300 transform hover:scale-105">
+                                            🛡️ INOCUIDAD
+                                            <div class="text-sm font-normal mt-1">Seguridad alimentaria</div>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Feedback -->
+                                    <div id="exerciseFeedback" class="mt-6 hidden">
+                                        <div class="rounded-lg p-4">
+                                            <p id="exerciseFeedbackText" class="font-bold text-lg mb-2"></p>
+                                            <p id="exerciseExplanation" class="text-sm"></p>
+                                            <button id="nextQuestionBtn" onclick="nextQuestion()" class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
+                                                Siguiente Pregunta →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resultados finales -->
+                        <div id="exerciseResults" class="hidden text-center">
+                            <div class="mb-8">
+                                <div id="resultsIcon" class="rounded-full w-32 h-32 mx-auto mb-6 flex items-center justify-center text-6xl"></div>
+                                <h4 id="resultsTitle" class="text-3xl font-bold mb-4"></h4>
+                                <p id="resultsScore" class="text-xl text-gray-600 mb-6"></p>
+                                <div id="resultsMessage" class="bg-gray-50 rounded-lg p-6 mb-6"></div>
+                                <button onclick="restartExercise()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                    🔄 Intentar de Nuevo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Quiz Interactivo -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-6">
@@ -1163,6 +1270,308 @@
             }
         }
 
+        // Variables del ejercicio práctico
+        let currentExerciseQuestion = 0;
+        let exerciseScore = 0;
+        let exerciseQuestions = [
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#8B4513"/>
+                    <rect x="50" y="50" width="200" height="100" fill="#D2691E" rx="10"/>
+                    <circle cx="100" cy="100" r="15" fill="#FF6B6B"/>
+                    <circle cx="150" cy="80" r="12" fill="#FF6B6B"/>
+                    <circle cx="180" cy="120" r="18" fill="#FF6B6B"/>
+                    <circle cx="120" cy="130" r="10" fill="#FF6B6B"/>
+                    <text x="150" y="180" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Filete con Marmoleo</text>
+                </svg>`,
+                caption: "Filete de res con marmoleo visible",
+                question: "¿El marmoleo (vetas de grasa) en este filete es un atributo de calidad o inocuidad?",
+                correctAnswer: "calidad",
+                explanation: "El marmoleo es un atributo de CALIDAD que hace el producto más deseable y sabroso, pero no afecta su seguridad."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#F0F8FF"/>
+                    <rect x="50" y="60" width="200" height="80" fill="#FFE4E1" rx="5"/>
+                    <circle cx="80" cy="100" r="8" fill="#32CD32"/>
+                    <circle cx="120" cy="90" r="6" fill="#32CD32"/>
+                    <circle cx="160" cy="110" r="10" fill="#32CD32"/>
+                    <circle cx="200" cy="95" r="7" fill="#32CD32"/>
+                    <text x="150" y="30" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">Análisis Microbiológico</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Ausencia de Salmonella</text>
+                </svg>`,
+                caption: "Resultado de análisis microbiológico negativo",
+                question: "¿La ausencia de Salmonella en este producto es un atributo de calidad o inocuidad?",
+                correctAnswer: "inocuidad",
+                explanation: "La ausencia de patógenos como Salmonella es INOCUIDAD - seguridad alimentaria no negociable."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#F5F5DC"/>
+                    <ellipse cx="150" cy="100" rx="80" ry="60" fill="#FF4500"/>
+                    <ellipse cx="150" cy="100" rx="70" ry="50" fill="#FF6347"/>
+                    <ellipse cx="150" cy="100" rx="60" ry="40" fill="#FF7F50"/>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Pollo Dorado Perfecto</text>
+                </svg>`,
+                caption: "Pollo con color dorado atractivo",
+                question: "¿El color dorado atractivo de este pollo asado es un atributo de calidad o inocuidad?",
+                correctAnswer: "calidad",
+                explanation: "El color dorado es un atributo de CALIDAD que hace el producto más apetecible visualmente."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#E6E6FA"/>
+                    <rect x="75" y="50" width="150" height="100" fill="#FFF" stroke="#333" stroke-width="2" rx="5"/>
+                    <text x="150" y="75" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">TERMÓMETRO</text>
+                    <rect x="140" y="85" width="20" height="50" fill="#FF0000"/>
+                    <text x="150" y="145" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">4°C</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Temperatura de Refrigeración</text>
+                </svg>`,
+                caption: "Control de temperatura en refrigeración",
+                question: "¿Mantener la temperatura de refrigeración a 4°C es un atributo de calidad o inocuidad?",
+                correctAnswer: "inocuidad",
+                explanation: "El control de temperatura es INOCUIDAD - previene el crecimiento de microorganismos patógenos."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#F0F8FF"/>
+                    <rect x="50" y="70" width="200" height="60" fill="#DDA0DD" rx="10"/>
+                    <text x="150" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="bold">TEXTURA SUAVE</text>
+                    <text x="150" y="110" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Y JUGOSA</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Terneza del Producto</text>
+                </svg>`,
+                caption: "Carne con textura suave y jugosa",
+                question: "¿La terneza y jugosidad de esta carne es un atributo de calidad o inocuidad?",
+                correctAnswer: "calidad",
+                explanation: "La terneza es un atributo de CALIDAD que mejora la experiencia del consumidor, pero no afecta la seguridad."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#FFF8DC"/>
+                    <rect x="50" y="50" width="200" height="100" fill="#8B4513" rx="5"/>
+                    <circle cx="100" cy="80" r="8" fill="#228B22"/>
+                    <circle cx="150" cy="90" r="6" fill="#228B22"/>
+                    <circle cx="200" cy="85" r="10" fill="#228B22"/>
+                    <circle cx="120" cy="120" r="7" fill="#228B22"/>
+                    <circle cx="180" cy="115" r="9" fill="#228B22"/>
+                    <text x="150" y="30" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">CONTAMINACIÓN VISIBLE</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Moho en Superficie</text>
+                </svg>`,
+                caption: "Producto con moho visible en la superficie",
+                question: "¿La presencia de moho en este producto es un problema de calidad o inocuidad?",
+                correctAnswer: "inocuidad",
+                explanation: "El moho representa un riesgo de INOCUIDAD - puede producir micotoxinas peligrosas para la salud."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#F5F5F5"/>
+                    <rect x="75" y="60" width="150" height="80" fill="#FFB6C1" rx="10"/>
+                    <text x="150" y="85" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">PRESENTACIÓN</text>
+                    <text x="150" y="100" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">ATRACTIVA</text>
+                    <text x="150" y="115" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">EMPAQUE PREMIUM</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Presentación del Empaque</text>
+                </svg>`,
+                caption: "Producto con empaque atractivo y premium",
+                question: "¿La presentación atractiva del empaque es un atributo de calidad o inocuidad?",
+                correctAnswer: "calidad",
+                explanation: "La presentación del empaque es CALIDAD - influye en la percepción y deseo de compra del consumidor."
+            },
+            {
+                image: `<svg viewBox="0 0 300 200" class="w-full h-full">
+                    <rect width="300" height="200" fill="#E0FFFF"/>
+                    <rect x="50" y="50" width="200" height="100" fill="#FFF" stroke="#333" stroke-width="2" rx="5"/>
+                    <text x="150" y="75" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">FECHA DE CADUCIDAD</text>
+                    <text x="150" y="95" text-anchor="middle" fill="#FF0000" font-size="14" font-weight="bold">15 DIC 2024</text>
+                    <text x="150" y="115" text-anchor="middle" fill="#333" font-size="10" font-weight="bold">CONSUMIR ANTES DE</text>
+                    <text x="150" y="180" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Fecha de Caducidad Vigente</text>
+                </svg>`,
+                caption: "Etiqueta con fecha de caducidad vigente",
+                question: "¿Que el producto tenga una fecha de caducidad vigente es un atributo de calidad o inocuidad?",
+                correctAnswer: "inocuidad",
+                explanation: "La fecha de caducidad vigente es INOCUIDAD - garantiza que el producto es seguro para el consumo."
+            }
+        ];
+
+        // Funciones del ejercicio práctico
+        function startExercise() {
+            currentExerciseQuestion = 0;
+            exerciseScore = 0;
+            document.getElementById('exerciseStart').classList.add('hidden');
+            document.getElementById('exerciseActive').classList.remove('hidden');
+            updateExerciseProgress();
+            showExerciseQuestion();
+        }
+
+        function showExerciseQuestion() {
+            const question = exerciseQuestions[currentExerciseQuestion];
+            
+            document.getElementById('exerciseImageContainer').innerHTML = question.image;
+            document.getElementById('exerciseImageCaption').textContent = question.caption;
+            document.getElementById('exerciseQuestion').textContent = question.question;
+            
+            // Resetear botones
+            const qualityBtn = document.getElementById('qualityBtn');
+            const safetyBtn = document.getElementById('safetyBtn');
+            
+            qualityBtn.disabled = false;
+            safetyBtn.disabled = false;
+            qualityBtn.className = "w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-xl border-2 border-blue-300 transition-all duration-300 transform hover:scale-105";
+            safetyBtn.className = "w-full bg-red-100 hover:bg-red-200 text-red-800 font-bold py-4 px-6 rounded-xl border-2 border-red-300 transition-all duration-300 transform hover:scale-105";
+            
+            document.getElementById('exerciseFeedback').classList.add('hidden');
+        }
+
+        function selectAnswer(answer) {
+            const question = exerciseQuestions[currentExerciseQuestion];
+            const isCorrect = answer === question.correctAnswer;
+            const qualityBtn = document.getElementById('qualityBtn');
+            const safetyBtn = document.getElementById('safetyBtn');
+            const feedback = document.getElementById('exerciseFeedback');
+            const feedbackText = document.getElementById('exerciseFeedbackText');
+            const explanation = document.getElementById('exerciseExplanation');
+            
+            // Deshabilitar botones
+            qualityBtn.disabled = true;
+            safetyBtn.disabled = true;
+            
+            // Mostrar resultado
+            if (isCorrect) {
+                exerciseScore++;
+                feedbackText.textContent = "¡Correcto! 🎉";
+                feedbackText.className = "font-bold text-lg mb-2 text-green-600";
+                feedback.querySelector('div').className = "rounded-lg p-4 bg-green-50 border border-green-200";
+                
+                if (answer === 'calidad') {
+                    qualityBtn.className = "w-full bg-green-200 text-green-800 font-bold py-4 px-6 rounded-xl border-2 border-green-400";
+                } else {
+                    safetyBtn.className = "w-full bg-green-200 text-green-800 font-bold py-4 px-6 rounded-xl border-2 border-green-400";
+                }
+            } else {
+                feedbackText.textContent = "Incorrecto 😔";
+                feedbackText.className = "font-bold text-lg mb-2 text-red-600";
+                feedback.querySelector('div').className = "rounded-lg p-4 bg-red-50 border border-red-200";
+                
+                // Marcar respuesta incorrecta
+                if (answer === 'calidad') {
+                    qualityBtn.className = "w-full bg-red-200 text-red-800 font-bold py-4 px-6 rounded-xl border-2 border-red-400";
+                    safetyBtn.className = "w-full bg-green-200 text-green-800 font-bold py-4 px-6 rounded-xl border-2 border-green-400";
+                } else {
+                    safetyBtn.className = "w-full bg-red-200 text-red-800 font-bold py-4 px-6 rounded-xl border-2 border-red-400";
+                    qualityBtn.className = "w-full bg-green-200 text-green-800 font-bold py-4 px-6 rounded-xl border-2 border-green-400";
+                }
+            }
+            
+            explanation.textContent = question.explanation;
+            feedback.classList.remove('hidden');
+            
+            // Cambiar texto del botón si es la última pregunta
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            if (currentExerciseQuestion === exerciseQuestions.length - 1) {
+                nextBtn.textContent = "Ver Resultados 🏆";
+            }
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            currentExerciseQuestion++;
+            updateExerciseProgress();
+            
+            if (currentExerciseQuestion < exerciseQuestions.length) {
+                showExerciseQuestion();
+            } else {
+                showExerciseResults();
+            }
+        }
+
+        function updateExerciseProgress() {
+            const progress = document.getElementById('exerciseProgress');
+            const progressBar = document.getElementById('exerciseProgressBar');
+            const current = currentExerciseQuestion;
+            const total = exerciseQuestions.length;
+            
+            progress.textContent = `${current}/${total}`;
+            progressBar.style.width = `${(current / total) * 100}%`;
+        }
+
+        function showExerciseResults() {
+            document.getElementById('exerciseActive').classList.add('hidden');
+            document.getElementById('exerciseResults').classList.remove('hidden');
+            
+            const percentage = Math.round((exerciseScore / exerciseQuestions.length) * 100);
+            const resultsIcon = document.getElementById('resultsIcon');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const resultsScore = document.getElementById('resultsScore');
+            const resultsMessage = document.getElementById('resultsMessage');
+            
+            resultsScore.textContent = `Puntuación: ${exerciseScore}/${exerciseQuestions.length} (${percentage}%)`;
+            
+            if (percentage >= 80) {
+                resultsIcon.className = "bg-green-100 rounded-full w-32 h-32 mx-auto mb-6 flex items-center justify-center text-6xl";
+                resultsIcon.textContent = "🏆";
+                resultsTitle.textContent = "¡Excelente trabajo!";
+                resultsTitle.className = "text-3xl font-bold mb-4 text-green-600";
+                resultsMessage.innerHTML = `
+                    <p class="text-gray-700 mb-4">
+                        <strong>¡Felicitaciones!</strong> Has demostrado una comprensión sólida de la diferencia 
+                        entre calidad e inocuidad alimentaria.
+                    </p>
+                    <ul class="text-sm text-gray-600 text-left space-y-2">
+                        <li>• Entiendes que la inocuidad es seguridad no negociable</li>
+                        <li>• Reconoces que la calidad son atributos deseables</li>
+                        <li>• Puedes aplicar estos conceptos en situaciones reales</li>
+                    </ul>
+                `;
+            } else if (percentage >= 60) {
+                resultsIcon.className = "bg-yellow-100 rounded-full w-32 h-32 mx-auto mb-6 flex items-center justify-center text-6xl";
+                resultsIcon.textContent = "👍";
+                resultsTitle.textContent = "¡Buen intento!";
+                resultsTitle.className = "text-3xl font-bold mb-4 text-yellow-600";
+                resultsMessage.innerHTML = `
+                    <p class="text-gray-700 mb-4">
+                        Tienes una base sólida, pero hay algunos conceptos que puedes reforzar.
+                    </p>
+                    <div class="text-sm text-gray-600 text-left">
+                        <p class="mb-2"><strong>Recuerda:</strong></p>
+                        <ul class="space-y-1">
+                            <li>• <strong>Inocuidad:</strong> Seguridad, ausencia de peligros</li>
+                            <li>• <strong>Calidad:</strong> Atributos que hacen deseable el producto</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                resultsIcon.className = "bg-red-100 rounded-full w-32 h-32 mx-auto mb-6 flex items-center justify-center text-6xl";
+                resultsIcon.textContent = "📚";
+                resultsTitle.textContent = "Necesitas repasar";
+                resultsTitle.className = "text-3xl font-bold mb-4 text-red-600";
+                resultsMessage.innerHTML = `
+                    <p class="text-gray-700 mb-4">
+                        Es importante que refuerces estos conceptos fundamentales antes de continuar.
+                    </p>
+                    <div class="text-sm text-gray-600 text-left">
+                        <p class="mb-2"><strong>Conceptos clave a repasar:</strong></p>
+                        <ul class="space-y-1">
+                            <li>• La inocuidad se refiere a la seguridad del alimento</li>
+                            <li>• La calidad se refiere a características deseables</li>
+                            <li>• La inocuidad nunca es negociable</li>
+                            <li>• La calidad puede variar según preferencias</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            updateProgress();
+        }
+
+        function restartExercise() {
+            document.getElementById('exerciseResults').classList.add('hidden');
+            document.getElementById('exerciseStart').classList.remove('hidden');
+            
+            // Resetear progreso
+            document.getElementById('exerciseProgress').textContent = '0/8';
+            document.getElementById('exerciseProgressBar').style.width = '0%';
+        }
+
         // Inicializar progreso
         setTimeout(() => {
             document.querySelector('header .fade-in').classList.add('visible');
@@ -1176,5 +1585,5 @@
             }
         }, 30000);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b8bb3bc35f6a97',t:'MTc1NDU5MDIzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b9991bb1a749dc',t:'MTc1NDU5OTMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
