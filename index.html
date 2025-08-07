@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inocuidad y Calidad Alimentaria - Primer Día (Mejorado)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Estilo para los botones que deben parecer divs o tarjetas */
+        .interactive-button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            text-align: left;
+            width: 100%;
+        }
+        .interactive-button:focus-visible {
+            outline: 2px solid #4f46e5;
+            outline-offset: 4px;
+            border-radius: 0.75rem;
+        }
+
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        /* El estado expandido se controla mediante el atributo data-expanded */
+        .expandable-content[data-expanded="true"] {
+            max-height: 1000px; /* Suficientemente grande para el contenido */
+        }
+        
+        .rotate-icon { transition: transform 0.3s ease; }
+        .rotate-icon[data-rotated="true"] { transform: rotate(180deg); }
+        
+        .modal {
+            display: none; /* Se mostrará con JS */
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.is-open { display: flex; }
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalSlideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .quiz-option { transition: all 0.3s ease; }
+        .quiz-option:hover { background-color: rgba(255, 255, 255, 0.2); transform: translateX(5px); }
+        .quiz-option.correct { background-color: #dcfce7; border-color: #16a34a; color: #15803d; }
+        .quiz-option.incorrect { background-color: #fef2f2; border-color: #dc2626; color: #b91c1c; }
+
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
+
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="text-center fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">🩺 Inocuidad y Calidad Alimentaria</h1>
+                <p class="text-xl md:text-2xl mb-6">Para Médicos Veterinarios Zootecnistas</p>
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block">
+                    <p class="text-lg">🎓 Curso Universitario</p>
+                    <p class="text-sm mt-2">Primer día de clases</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+                <button type="button" data-toggle="accordion" aria-expanded="false" aria-controls="welcomeDetails" class="interactive-button">
+                    <div class="text-center mb-4">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center justify-center">
+                            ¡Bienvenidos al Curso! 👋
+                            <svg data-icon="accordion" class="w-6 h-6 ml-2 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                        <p class="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Sean bienvenidos futuros Médicos Veterinarios Zootecnistas. Este curso es una pieza fundamental en su formación. Nuestra responsabilidad va mucho más allá de la clínica:
+                            <span class="font-semibold text-indigo-600">somos los garantes de la salud pública desde la alimentación.</span>
+                        </p>
+                        <p class="text-sm text-gray-500 mt-2">Haz clic para ver más detalles</p>
+                    </div>
+                </button>
+                <div id="welcomeDetails" class="expandable-content">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">🔗 La Cadena de Confianza Alimentaria</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-white">
+                <button type="button" data-modal-trigger="chainModal" data-content-id="granja" class="interactive-button card-hover bg-green-500 rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-4">🚜</div>
+                    <h3 class="font-bold text-lg">Granja</h3>
+                    <p class="text-sm mt-2">Origen de todo</p>
+                </button>
+                <button type="button" data-modal-trigger="chainModal" data-content-id="transporte" class="interactive-button card-hover bg-blue-500 rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-4">🚛</div>
+                    <h3 class="font-bold text-lg">Transporte</h3>
+                    <p class="text-sm mt-2">Mantenimiento seguro</p>
+                </button>
+                </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">🛡️ El Veterinario: Guardián de la Inocuidad</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-white">
+                <button type="button" data-modal-trigger="roleModal" data-content-id="inspector" class="interactive-button card-hover bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6">
+                     <div class="text-3xl mb-4">🔍</div>
+                     <h3 class="font-bold text-lg mb-2">Inspectores</h3>
+                     <p class="text-sm">Verificamos el cumplimiento de normas</p>
+                </button>
+                </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>Formando guardianes de la salud pública alimentaria</p>
+        </div>
+    </footer>
+
+    <div id="mainModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div id="modalHeader" class="p-6 text-white rounded-t-lg">
+                <div class="flex justify-between items-center">
+                    <h2 id="modalTitle" class="text-2xl font-bold"></h2>
+                    <button type="button" data-dismiss="modal" class="text-white hover:text-gray-200" aria-label="Cerrar modal">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="modalBody" class="p-8">
+                </div>
+        </div>
+    </div>
+
+    <template id="granja">
+        <div class="space-y-6">
+            <p class="text-lg text-gray-700">En la granja comienza nuestra responsabilidad como veterinarios sanitaristas.</p>
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <p class="text-sm text-gray-700"><strong>Punto clave:</strong> Un animal sano es el primer eslabón de un alimento seguro.</p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="transporte">
+         <div class="space-y-6">
+            <p class="text-lg text-gray-700">El transporte es un punto crítico donde pueden perderse todos los cuidados previos.</p>
+            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                <p class="text-sm text-gray-700"><strong>Riesgo crítico:</strong> La contaminación cruzada durante el transporte puede comprometer lotes completos.</p>
+            </div>
+        </div>
+    </template>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- CONFIGURACIÓN DE DATOS ---
+        // Se mantiene aquí la información que no es contenido, como colores o títulos cortos.
+        const modalData = {
+            granja: { title: "🚜 Granja - El Origen de Todo", color: "from-green-500 to-green-600" },
+            transporte: { title: "🚛 Transporte - Mantenimiento Seguro", color: "from-blue-500 to-blue-600" },
+            procesamiento: { title: "🏭 Procesamiento - Transformación Controlada", color: "from-purple-500 to-purple-600" },
+            consumidor: { title: "🛒 Consumidor - Confianza Final", color: "from-orange-500 to-orange-600" },
+            inspector: { title: "🔍 Inspector Veterinario", color: "from-blue-500 to-blue-600" },
+            // ... otros datos
+        };
+
+        const modal = document.getElementById('mainModal');
+        const modalHeader = document.getElementById('modalHeader');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        // --- MANEJO DE EVENTOS CENTRALIZADO (EVENT DELEGATION) ---
+        document.body.addEventListener('click', (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            // Delegación para los acordeones
+            if (button.dataset.toggle === 'accordion') {
+                toggleAccordion(button);
+            }
+
+            // Delegación para abrir modales
+            if (button.dataset.modalTrigger) {
+                openModal(button.dataset.contentId);
+            }
+
+            // Delegación para cerrar modales
+            if (button.dataset.dismiss === 'modal') {
+                closeModal();
+            }
+
+            // Delegación para el Quiz
+            if (button.dataset.quizOption) {
+                handleQuizSelection(button);
+            }
+        });
+
+        // --- LÓGICA DE LOS COMPONENTES ---
+
+        function toggleAccordion(button) {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            const content = document.getElementById(button.getAttribute('aria-controls'));
+            const icon = button.querySelector('[data-icon="accordion"]');
+
+            button.setAttribute('aria-expanded', !isExpanded);
+            content.dataset.expanded = !isExpanded;
+            if (icon) icon.dataset.rotated = !isExpanded;
+        }
+
+        function openModal(contentId) {
+            const data = modalData[contentId];
+            const template = document.getElementById(contentId);
+
+            if (!data || !template) {
+                console.error(`Contenido o datos no encontrados para el id: ${contentId}`);
+                return;
+            }
+
+            // Poblar y estilizar el modal
+            modalHeader.className = `p-6 text-white rounded-t-lg bg-gradient-to-r ${data.color}`;
+            modalTitle.textContent = data.title;
+            modalBody.innerHTML = ''; // Limpiar contenido anterior
+            modalBody.appendChild(template.content.cloneNode(true));
+            
+            // Mostrar modal y enfocar para accesibilidad
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden'; // Evitar scroll del fondo
+            modal.querySelector('button[data-dismiss="modal"]').focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+        
+        function handleQuizSelection(button) {
+            const isCorrect = button.dataset.correct === 'true';
+            const quizContainer = button.closest('[data-quiz-container]');
+            const feedbackEl = quizContainer.querySelector('[data-quiz-feedback]');
+            const explanationText = button.dataset.explanation || (isCorrect ? "¡Excelente! Has entendido el concepto clave." : "Revisa la sección de definiciones para aclarar la diferencia.");
+
+            // Deshabilitar todas las opciones
+            quizContainer.querySelectorAll('[data-quiz-option]').forEach(opt => {
+                opt.disabled = true;
+                // Marcar la respuesta correcta si la seleccionada es incorrecta
+                if (!isCorrect && opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                }
+            });
+
+            // Estilizar la opción seleccionada
+            button.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Mostrar feedback
+            feedbackEl.innerHTML = `<p class="font-bold ${isCorrect ? 'text-green-200' : 'text-red-200'}">${isCorrect ? '¡Correcto! 🎉' : 'Incorrecto 😔'}</p><p class="mt-2 text-sm">${explanationText}</p>`;
+            feedbackEl.classList.remove('hidden');
+        }
+
+        // Cerrar modal con la tecla Escape
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // --- ANIMACIONES DE SCROLL (INTERSECTION OBSERVER) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Dejar de observar una vez animado
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 200);
+                    timelineObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.timeline-item').forEach(el => timelineObserver.observe(el));
+    });
+    </script>
+</body>
+</html>
